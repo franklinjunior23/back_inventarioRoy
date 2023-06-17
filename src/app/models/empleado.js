@@ -10,6 +10,14 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      EMPLEADO.belongsTo(models.SUCURSAL,{
+        foreignKey:'id_sucursal',
+        targetKey:'id'
+      })
+      
+      EMPLEADO.hasOne(models.DISPOSITIVO,{
+        foreignKey:'id_empleado'
+      })
       // define association here
     }
   }

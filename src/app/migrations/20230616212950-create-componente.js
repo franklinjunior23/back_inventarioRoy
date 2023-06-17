@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('COMPONENTEs', {
+    await queryInterface.createTable('COMPONENTE', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,7 +10,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       id_dispositivo: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        references:{
+          model:'DISPOSITIVO',
+          key:'id'
+        },
+        onDelete:'CASCADE',
+        onUpdate:'CASCADE'
       },
       config_mac: {
         type: Sequelize.STRING
@@ -47,6 +53,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('COMPONENTEs');
+    await queryInterface.dropTable('COMPONENTE');
   }
 };

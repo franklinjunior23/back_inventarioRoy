@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      EMPRESA.hasMany(models.SUCURSAL,{
+        foreignKey:'id_empresa'
+      })
     }
   }
   EMPRESA.init({

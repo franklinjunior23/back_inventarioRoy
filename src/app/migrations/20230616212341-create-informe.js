@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('INFORMEs', {
+    await queryInterface.createTable('INFORME', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -13,10 +13,23 @@ module.exports = {
         type: Sequelize.STRING
       },
       id_sucursal: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references:{
+          model:'SUCURSAL',
+          key:'id'
+        },
+        onDelete:'CASCADE',
+        onUpdate:'CASCADE'
       },
       id_dispositivo: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        references:{
+          model:'DISPOSITIVO',
+          key:'id'
+        },
+        onDelete:'CASCADE',
+        onUpdate:'CASCADE'
+        
       },
       accion: {
         type: Sequelize.STRING
@@ -35,6 +48,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('INFORMEs');
+    await queryInterface.dropTable('INFORME');
   }
 };

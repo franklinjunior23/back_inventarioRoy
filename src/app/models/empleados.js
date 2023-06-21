@@ -3,22 +3,27 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class DETALLE extends Model {
+  class empleados extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      DETALLE.belongsTo(models.EMPLEADO,{
-        foreignKey:'id_empleado',
+      empleados.belongsTo(models.sucursales,{
+        foreignKey:'id_sucursal',
         targetKey:'id'
+      })
+      empleados.hasMany(models.dispositivos,{
+        foreignKey:'id_empleado'
       })
       // define association here
     }
   }
-  DETALLE.init({
-    id_empleado: DataTypes.STRING,
+  empleados.init({
+    id_sucursal:DataTypes.INTEGER,
+    nombre: DataTypes.STRING,
+    apellido: DataTypes.STRING,
     tipo_usuario: DataTypes.STRING,
     nivel_red: DataTypes.STRING,
     usuario: DataTypes.STRING,
@@ -30,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
     email_contraseña: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'DETALLE',
+    modelName: 'empleados',
   });
-  return DETALLE;
+  return empleados;
 };

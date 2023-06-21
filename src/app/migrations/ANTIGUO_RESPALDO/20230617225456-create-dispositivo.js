@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('EMPLEADO', {
+    await queryInterface.createTable('dispositivo', {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -11,16 +11,34 @@ module.exports = {
       id_sucursal: {
         type: Sequelize.INTEGER,
         references:{
-          model:'SUCURSAL',
+          model:'sucursal',
           key:'id'
         },
         onDelete:'CASCADE',
         onUpdate:'CASCADE'
       },
-      nombre: {
+      id_empleado: {
+        type: Sequelize.STRING,
+        references:{
+          model:'personal',
+          key:'id'
+        },
+        onDelete:'CASCADE',
+        onUpdate:'CASCADE'
+      },
+      tipo: {
         type: Sequelize.STRING
       },
-      apellidos: {
+      marca: {
+        type: Sequelize.STRING
+      },
+      modelo: {
+        type: Sequelize.STRING
+      },
+      serie: {
+        type: Sequelize.STRING
+      },
+      conexion: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -34,6 +52,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('EMPLEADO');
+    await queryInterface.dropTable('dispositivo');
   }
 };

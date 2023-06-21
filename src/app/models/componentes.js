@@ -3,33 +3,38 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class COMPONENTE extends Model {
+  class componentes extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      COMPONENTE.belongsTo(models.DISPOSITIVO,{
+      componentes.belongsTo(models.dispositivos,{
         foreignKey:'id_dispositivo',
         targetKey:'id'
       })
       // define association here
     }
   }
-  COMPONENTE.init({
+  componentes.init({
     id_dispositivo: DataTypes.STRING,
     config_mac: DataTypes.STRING,
+    config_ip: DataTypes.STRING,
     config_user: DataTypes.STRING,
+    config_contraseña: DataTypes.STRING,
     placa_modelo: DataTypes.STRING,
     placa_detalle: DataTypes.STRING,
     procesador_marca: DataTypes.STRING,
-    placa_detalle: DataTypes.STRING,
-    almacenamiento_cantidad: DataTypes.STRING,
-    almacenamiento_detalle: DataTypes.STRING
+    procesador_modelo: DataTypes.STRING,
+    ram_cantidad: DataTypes.INTEGER,
+    ram_modulo: DataTypes.STRING,
+    almacenamiento_cantidad: DataTypes.INTEGER,
+    almacenamiento_detalle: DataTypes.STRING,
+    video: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'COMPONENTE',
+    modelName: 'componentes',
   });
-  return COMPONENTE;
+  return componentes;
 };

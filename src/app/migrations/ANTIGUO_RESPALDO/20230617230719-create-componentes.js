@@ -2,43 +2,58 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('DISPOSITIVO', {
+    await queryInterface.createTable('componente', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.STRING
       },
-      id_sucursal: {
-        type: Sequelize.INTEGER,
-        references:{
-          model:'SUCURSAL',
-          key:'id'
-        },
-        onDelete:'CASCADE',
-        onUpdate:'CASCADE'
-      },
-      id_empleado: {
+      id_dispositivo: {
         type: Sequelize.STRING,
         references:{
-          model:'EMPLEADO',
+          model:'dispositivo',
           key:'id'
         },
         onDelete:'CASCADE',
         onUpdate:'CASCADE'
       },
-      tipo: {
+      config_mac: {
         type: Sequelize.STRING
       },
-      marca: {
+      config_ip: {
         type: Sequelize.STRING
       },
-      modelo: {
+      config_user: {
         type: Sequelize.STRING
       },
-      serie: {
+      config_contraseña: {
         type: Sequelize.STRING
       },
-      conexion: {
+      placa_modelo: {
+        type: Sequelize.STRING
+      },
+      placa_detalle: {
+        type: Sequelize.STRING
+      },
+      procesador_marca: {
+        type: Sequelize.STRING
+      },
+      procesador_modelo: {
+        type: Sequelize.STRING
+      },
+      ram_cantidad: {
+        type: Sequelize.INTEGER
+      },
+      ram_modulo: {
+        type: Sequelize.STRING
+      },
+      almacenamiento_cantidad: {
+        type: Sequelize.INTEGER
+      },
+      almacenamiento_detalle: {
+        type: Sequelize.STRING
+      },
+      video: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -52,6 +67,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('DISPOSITIVO');
+    await queryInterface.dropTable('componente');
   }
 };

@@ -2,47 +2,44 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('DETALLE', {
+    await queryInterface.createTable('dispositivos', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
-      id_empleado: {
-        type: Sequelize.STRING,
+      id_sucursal: {
+        type: Sequelize.INTEGER,
         references:{
-          model:'EMPLEADO',
+          model:'sucursales',
           key:'id'
         },
-        onDelete:'CASCADE',
-        onUpdate:'CASCADE'
+        onUpdate:'CASCADE',
+        onDelete:'CASCADE'
       },
-      tipo_usuario: {
+      id_empleado: {
+        allowNull: true,
+        type: Sequelize.STRING,
+        references:{
+          model:'empleados',
+          key:'id'
+        },
+        onUpdate:'CASCADE',
+        onDelete:'CASCADE'
+      },
+      tipo: {
         type: Sequelize.STRING
       },
-      nivel_red: {
+      marca: {
         type: Sequelize.STRING
       },
-      usuario: {
+      modelo: {
         type: Sequelize.STRING
       },
-      contraseña: {
+      serie: {
         type: Sequelize.STRING
       },
-      anydesk_id: {
-        type: Sequelize.STRING
-      },
-      anydesk_contraseña: {
-        type: Sequelize.STRING
-      },
-      email_tipo: {
-        type: Sequelize.STRING
-      },
-      email_dirrecion: {
-        type: Sequelize.STRING
-      },
-      email_contraseña: {
+      conexion: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -56,6 +53,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('DETALLE');
+    await queryInterface.dropTable('dispositivos');
   }
 };

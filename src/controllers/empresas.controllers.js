@@ -72,7 +72,6 @@ const deleteSucursal = async (req,res)=>{
 const deleteEmpresa = async(req,res)=>{
     try {
         const id = req.params.id
-        console.log(id)
         const result = await empresas.destroy({where:{id}})
         res.json(result)
     } catch (error) {

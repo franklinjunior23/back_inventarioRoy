@@ -16,4 +16,6 @@ empleado.delete('/sucursales/:id',deleteSucursal)
 empleado.delete('/Empresas/:id',deleteEmpresa)
 empleado.get("/");
 
+empleado.post('')
+
 module.exports = empleado;

@@ -79,5 +79,13 @@ const deleteEmpresa = async(req,res)=>{
     }
 }
 
+const createEmpleado = async (req,res)=>{
+    try {
+        
+    } catch (error) {
+        
+    }
+}
 
-module.exports={getEmpresas ,createEmpresa , createSucursal,getSucursalesEmpresa,deleteSucursal,deleteEmpresa}
+
+module.exports={getEmpresas ,createEmpresa , createSucursal,getSucursalesEmpresa,deleteSucursal,deleteEmpresa,createEmpleado}

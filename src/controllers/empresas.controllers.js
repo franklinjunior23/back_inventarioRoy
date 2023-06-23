@@ -1,39 +1,39 @@
-const { empresas , sucursales } = require('../app/models/')
+const { empresas, sucursales, empleados } = require('../app/models/')
 
 
-const getEmpresas = async(req,res) =>{
+const getEmpresas = async (req, res) => {
     try {
         const result = await empresas.findAll()
         res.json(result)
     } catch (error) {
         res.status(501).json(error)
     }
-   
+
 
 }
-const createEmpresa = async(req, res)=>{
-    const {name} = req.body
+const createEmpresa = async (req, res) => {
+    const { name } = req.body
     try {
-        const result = await empresas.create({nombre:name})
+        const result = await empresas.create({ nombre: name })
         res.json(result)
     } catch (error) {
         res.status(501).json(error)
     }
 }
-const createSucursal = async(req,res)=>{
-    
+const createSucursal = async (req, res) => {
+
     try {
-        const { nombre,empresa }= req.body;
+        const { nombre, empresa } = req.body;
         const id_tabl = await empresas.findOne({
-            where:{
-                nombre:empresa
+            where: {
+                nombre: empresa
             }
         })
         const codigo_tabla = id_tabl.id
-        
-        const resp =  await sucursales.create({
-            nombre:nombre,
-            id_empresa:codigo_tabla
+
+        const resp = await sucursales.create({
+            nombre: nombre,
+            id_empresa: codigo_tabla
         })
         res.json(resp)
     } catch (error) {
@@ -41,12 +41,12 @@ const createSucursal = async(req,res)=>{
     }
 }
 
-const getSucursalesEmpresa = async(req,res)=>{
+const getSucursalesEmpresa = async (req, res) => {
     try {
         const result = await sucursales.findAll({
-            include:{
-                model:empresas,
-                attributes:['nombre']
+            include: {
+                model: empresas,
+                attributes: ['nombre']
             }
         })
         res.json(result)
@@ -55,11 +55,11 @@ const getSucursalesEmpresa = async(req,res)=>{
     }
 }
 
-const deleteSucursal = async (req,res)=>{
+const deleteSucursal = async (req, res) => {
     try {
-        const id= req.params.id
+        const id = req.params.id
         const result = await sucursales.destroy({
-            where:{
+            where: {
                 id
             }
         })
@@ -69,23 +69,62 @@ const deleteSucursal = async (req,res)=>{
     }
 }
 
-const deleteEmpresa = async(req,res)=>{
+const deleteEmpresa = async (req, res) => {
     try {
         const id = req.params.id
-        const result = await empresas.destroy({where:{id}})
+        const result = await empresas.destroy({ where: { id } })
         res.json(result)
     } catch (error) {
         res.json(error)
     }
 }
 
-const createEmpleado = async (req,res)=>{
+const createEmpleado = async (req, res) => {
     try {
-        
+        // primero buscas por el nombre brindado de la sucursal la id / si en caso que si no se puede por el nombre
+        const NombreSucursal = req.params.sucursal;
+        const DataSucursal = await sucursales.findOne({
+            where: { nombre: NombreSucursal }
+        })
+        const { nombre, apellido, tipo_usuario, nivel_red, usuario, contraseña, anydesk_id, anydesk_contraseña, email_tipo, email_dirrecion, email_contraseña } = req.body
+        if (DataSucursal) {
+            const data = await empleados.create({
+                id_sucusal: DataSucursal.id,
+                nombre, apellido, tipo_usuario, nivel_red, usuario, contraseña, anydesk_id, anydesk_contraseña, email_tipo, email_dirrecion, email_contraseña
+            })
+            res.json(data)
+        }
     } catch (error) {
-        
+        res.json(error)
+    }
+}
+
+const getEmpleados = async( res )=>{
+    try {
+        const data = await empleados.findAll({
+            include:{
+                model:sucursales
+            }
+        })
+        res.json(data)
+    } catch (error) {
+        res.json(error)
+    }
+}
+const deleteEmpleado = async(res,req)=>{
+    try {
+        const idEmpleado = req.params.id;
+        const data = await empleados.destroy({
+            where:{
+                id:idEmpleado
+            }
+        })
+        res.json(data)
+    } catch (error) {
+        res.json(error)
+        console.log(error)
     }
 }
 
 
-module.exports={getEmpresas ,createEmpresa , createSucursal,getSucursalesEmpresa,deleteSucursal,deleteEmpresa,createEmpleado}
+module.exports = { getEmpresas, createEmpresa, createSucursal, getSucursalesEmpresa, deleteSucursal, deleteEmpresa, createEmpleado,getEmpleados }

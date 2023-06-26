@@ -2,10 +2,13 @@ const { empresas, sucursales, empleados } = require("../app/models/");
 
 const getEmpresas = async (req, res) => {
   try {
+    const usuariologeado = req.userlogeado;
+    console.log(usuariologeado)
     const result = await empresas.findAll();
     res.json(result);
   } catch (error) {
-    res.status(501).json(error);
+    console.log(error)
+    res.status(501).send(error);
   }
 };
 const createEmpresa = async (req, res) => {
@@ -14,7 +17,7 @@ const createEmpresa = async (req, res) => {
     const result = await empresas.create({ nombre: name });
     res.json(result);
   } catch (error) {
-    res.status(501).json(error);
+     return res.status(501).json(error);
   }
 };
 const createSucursal = async (req, res) => {

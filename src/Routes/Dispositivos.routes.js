@@ -1,4 +1,4 @@
-const { getDispositivos, createDispositivo } = require("../controllers/dispositivos.controlles")
+const { getDispositivos, createDispositivo } = require("../controllers/dispositivos.controllers")
 
 
 const dispositivos = require("express").Router()
